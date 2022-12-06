@@ -1,7 +1,7 @@
 signal = File.read("input.txt")
-sizes = [4, 14]
+SIZES = [4, 14]
 
-sizes.each do |size|
+SIZES.each do |size|
   marker = []
   signal.split("").each_with_index do |char,pos|
     marker << char
