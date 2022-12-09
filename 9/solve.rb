@@ -1,6 +1,6 @@
 commands = File.read("input.txt").split("\n")
 
-visited = []
+
 
 def move_head(start, direction)
   target = start
@@ -39,25 +39,26 @@ def move_tail(start, position_head)
   target
 end
 
-current_head = [0,0]
-current_tails = Array.new(9, [0,0])
+[2, 10].each do |knots|
+  visited = []
+  current_head = [0,0]
+  current_tails = Array.new(knots - 1, [0,0])
 
+  commands.each do |command|
+    direction,distance = command.split(" ")
+    distance = distance.to_i
 
-commands.each do |command|
-  direction,distance = command.split(" ")
-  distance = distance.to_i
-
-  puts command
-  distance.times do |i|
-    current_head = move_head(current_head, direction)
-    predecessor = current_head
-    current_tails.each_with_index do |current_tail, i|
-      current_tails[i] = move_tail(current_tail, predecessor)
-      predecessor = current_tails[i]
-      visited << current_tails[i] if i == current_tails.size - 1
+    distance.times do |i|
+      current_head = move_head(current_head, direction)
+      predecessor = current_head
+      current_tails.each_with_index do |current_tail, i|
+        current_tails[i] = move_tail(current_tail, predecessor)
+        predecessor = current_tails[i]
+        visited << current_tails[i] if i == current_tails.size - 1
+      end
     end
   end
-end
 
-puts "=================="
-p visited.uniq.size
+  puts "#{knots} knots: #{visited.uniq.size}"
+  
+end
